@@ -10,7 +10,9 @@ interface User {
 }
 
 const UserPage = async () => {
-	const res = await fetch("https://jsonplaceholder.typicode.com/users")
+	const res = await fetch("https://jsonplaceholder.typicode.com/users", { next: { revalidate: 10 } })
+	// Next js is gonna run the background job and get frsh data from backend every 10 seconds
+	// this caching behaviour is only implemented in fetch function
 	const users: User[] = await res.json()
 
 	return (
