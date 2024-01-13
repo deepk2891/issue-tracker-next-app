@@ -10,7 +10,8 @@ interface User {
 }
 
 const UserPage = async () => {
-	const res = await fetch("https://jsonplaceholder.typicode.com/users", { next: { revalidate: 10 } })
+	const res = await fetch("https://jsonplaceholder.typicode.com/users", { cache: "no-store" })
+	// const res = await fetch("https://jsonplaceholder.typicode.com/users", { next: { revalidate: 10 } })
 	// Next js is gonna run the background job and get frsh data from backend every 10 seconds
 	// this caching behaviour is only implemented in fetch function
 	const users: User[] = await res.json()
@@ -19,6 +20,7 @@ const UserPage = async () => {
 		<>
 			<div>UserPage</div>
 			<h1>Users</h1>
+			<p>{new Date().toLocaleTimeString()}</p>
 			<ul>
 				{users.map((user) => (
 					<li key={user.id}>{user.name}</li>
